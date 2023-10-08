@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gym-app
+  namespace: gym
+  labels:
+    app: gym
+    tier: web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: gym
+        tier: web
+    spec:
+      initContainers:
+      - name: vault-retrieve
+        image: "pi4apps:5000/vault-retrieve:0.9"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: profile
+          value: dev
+        - name: MOUNT_PATH
+          value: "/var/vault"
+        - name: SPRING_CLOUD_VAULT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: gym-secrets
+              key: token
+        volumeMounts:
+        - mountPath: /var/vault
+          name: vault-token
+      containers:
+      - name: gym
+        image: "pi4apps:5000/gym:2.0.0"
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: profile
+          value: pi
+        - name: SECRETS_CONFIG_FILE
+          value: /var/vault/vars
+        resources:
+          limits:
+            memory: "384Mi"
+            cpu: "1000m" # 1 CPU
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8444
+          timeoutSeconds: 60
+        #          initialDelaySeconds: 60
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8444
+          timeoutSeconds: 3
+          initialDelaySeconds: 60
+        volumeMounts:
+        - mountPath: /var/vault
+          name: vault-token
+      volumes:
+      - name: vault-token
+        emptyDir:
+          sizeLimit: 1Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gym-service
+  namespace: gym
+spec:
+  selector:
+    app: gym
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8444
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gym-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: gym.cloud.lavacro.com
+    http:
+      paths:
+      - path: "/"
+        pathType: Prefix
+        backend:
+          service:
+            name: gym-service
+            port:
+              number: 80

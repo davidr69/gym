@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    vault:
+      authentication: TOKEN
+      host: nube.lavacro.com
+      port: 8201
+      scheme: http
+      cubbyhole: enabled
+      role: readonly

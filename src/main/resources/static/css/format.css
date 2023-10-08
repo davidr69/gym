@@ -1,0 +1,58 @@
+td, body {
+	font-family:	Muli, sans-serif;
+	font-size:		10pt;
+}
+
+body {
+	background-color: #ececec;
+}
+
+.muscle {
+	font-family:	Muli, sans-serif;;
+	background:		#524745;
+	color:			#ffffff;
+	font-weight:	bold;
+}
+
+.exercise {
+	font-family:	Muli, sans-serif;
+	background:		#6d625d;
+	padding-left:	15px;
+	color:			#ffffff;
+	text-align:		left;
+}
+
+.data {
+	font-family:	Muli, sans-serif;
+	background:		#c2b7ac;
+	text-align:		right;
+}
+
+a {
+	font-family:	Muli, sans-serif;
+	text-decoration: none;
+	color:			#000000;
+}
+
+a:hover {
+	font-family:	Muli, sans-serif;
+	text-decoration: underline;
+	color:			orange;
+}
+
+table {
+	padding: 2px;
+	border: none;
+}
+
+th {
+	text-align:		center;
+	width:			80px;
+	font-family:	'Muli', sans-serif;
+	background:		#6d625d;
+	color:			#ffffff;
+}
+
+.center {
+	text-align:		center;
+}

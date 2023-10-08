@@ -1,0 +1,15 @@
+server:
+  session:
+    timeout: 300
+  port: 8444
+
+database:
+  driver: org.postgresql.Driver
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+    health:
+      enabled: true

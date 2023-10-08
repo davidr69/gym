@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Workout editor</title>
+	<link type="text/css" rel="stylesheet" href="css/fonts.css">
+	<link type="text/css" rel="stylesheet" href="css/format.css">
+	<script type="text/javascript" src="js/ajax.js"></script>
+	<script type="text/javascript">
+			let loc = window.location.toString();
+			if(loc.substring(loc.length - 1) != '/') {
+				let newloc = loc + '/';
+				window.location = newloc;
+			}
+
+			const monthCount = Number("{{ columns }}");
+		</script>
+	<script type="module" src="js/imports.js"></script>
+	<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<table style="border-spacing: 1px; padding: 2px" id="table" about="table">
+	<thead id="tableHead">
+	<tr id="tableRecord">
+		<th style="width: auto; background-color: #ececec;" id="th">
+			<a href="javascript:rewind()">&laquo;&laquo;&laquo;</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="javascript:forward()">&raquo;&raquo;&raquo;</a>
+		</th>
+	</tr>
+	</thead>
+	<tbody id="tableBody"></tbody>
+</table>
+</body>
+</html>
