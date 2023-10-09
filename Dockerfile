@@ -4,4 +4,4 @@ COPY target/*.jar /app/
 WORKDIR /app
 USER nobody
 
-CMD java -Dspring.profiles.active=$profile -jar gym-2.0.0.jar
+CMD java -Dspring.profiles.active=$profile -jar gym-2.0.1.jar

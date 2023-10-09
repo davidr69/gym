@@ -17,6 +17,10 @@ spec:
         app: gym
         tier: web
     spec:
+      volumes:
+      - name: vault-token
+        emptyDir:
+          sizeLimit: 1Mi
       initContainers:
       - name: vault-retrieve
         image: "pi4apps:5000/vault-retrieve:0.9"
@@ -25,24 +29,27 @@ spec:
         - name: profile
           value: dev
         - name: MOUNT_PATH
-          value: "/var/vault"
+          value: "/var/tmp/vault"
         - name: SPRING_CLOUD_VAULT_TOKEN
           valueFrom:
             secretKeyRef:
               name: gym-secrets
               key: token
         volumeMounts:
-        - mountPath: /var/vault
-          name: vault-token
+        - name: vault-token
+          mountPath: /var/tmp/vault
       containers:
       - name: gym
-        image: "pi4apps:5000/gym:2.0.0"
+        image: "pi4apps:5000/gym:2.0.1"
         imagePullPolicy: IfNotPresent
         env:
         - name: profile
           value: pi
         - name: SECRETS_CONFIG_FILE
-          value: /var/vault/vars
+          value: /var/tmp/vault/vars
+        volumeMounts:
+          - name: vault-token
+            mountPath: /var/tmp/vault
         resources:
           limits:
             memory: "384Mi"
@@ -59,13 +66,6 @@ spec:
             port: 8444
           timeoutSeconds: 3
           initialDelaySeconds: 60
-        volumeMounts:
-        - mountPath: /var/vault
-          name: vault-token
-      volumes:
-      - name: vault-token
-        emptyDir:
-          sizeLimit: 1Mi
 ---
 apiVersion: v1
 kind: Service

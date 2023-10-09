@@ -39,8 +39,10 @@ public class DbDriver {
 		DataSource dataSource() {
 			username = database.getUsername();
 			password = database.getPassword();
-			if(username == null || password == null) {
-				getUserAndPassword();
+
+			String config_file = System.getenv("SECRETS_CONFIG_FILE");
+			if(config_file != null) {
+				getUserAndPassword(config_file);
 			}
 
 			HikariDataSource hds = DataSourceBuilder
@@ -59,8 +61,7 @@ public class DbDriver {
 			return hds;
 		}
 
-		private void getUserAndPassword() {
-			String config_file = System.getenv("SECRETS_CONFIG_FILE");
+		private void getUserAndPassword(final String config_file) {
 			Map<String,String> vars = new HashMap<>();
 			try (
 				BufferedReader br = new BufferedReader(new FileReader(config_file))
