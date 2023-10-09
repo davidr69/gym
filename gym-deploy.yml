@@ -18,9 +18,9 @@ spec:
         tier: web
     spec:
       volumes:
-        - name: vault-token
-          emptyDir:
-            sizeLimit: 1Mi
+      - name: vault-token
+        emptyDir:
+          sizeLimit: 1Mi
       initContainers:
       - name: vault-retrieve
         image: "pi4apps:5000/vault-retrieve:0.9"
