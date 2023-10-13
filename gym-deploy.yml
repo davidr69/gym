@@ -23,13 +23,19 @@ spec:
           sizeLimit: 1Mi
       initContainers:
       - name: vault-retrieve
-        image: "pi4apps:5000/vault-retrieve:0.9"
+        image: "pi4apps:5000/vault-retrieve:1.0.0"
         imagePullPolicy: IfNotPresent
         env:
         - name: profile
           value: dev
         - name: MOUNT_PATH
           value: "/var/tmp/vault"
+        - name: VAULT_NAME
+          value: "cubbyhole/postgresql-dev"
+        - name: VAULT_PARAMS
+          value: "user,password"
+        - name: CONFIG_PREFIX
+          value: database
         - name: SPRING_CLOUD_VAULT_TOKEN
           valueFrom:
             secretKeyRef:
@@ -37,19 +43,19 @@ spec:
               key: token
         volumeMounts:
         - name: vault-token
-          mountPath: /var/tmp/vault
+          mountPath: "/var/tmp/vault"
       containers:
       - name: gym
-        image: "pi4apps:5000/gym:2.0.1"
+        image: "pi4apps:5000/gym:2.0.2"
         imagePullPolicy: IfNotPresent
         env:
         - name: profile
           value: pi
-        - name: SECRETS_CONFIG_FILE
-          value: /var/tmp/vault/vars
+        - name: additional_properties
+          value: "/var/tmp/vault/vault.properties"
         volumeMounts:
           - name: vault-token
-            mountPath: /var/tmp/vault
+            mountPath: "/var/tmp/vault"
         resources:
           limits:
             memory: "384Mi"
