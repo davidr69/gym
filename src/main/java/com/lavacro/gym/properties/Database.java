@@ -3,15 +3,15 @@ package com.lavacro.gym.properties;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 @Getter
 @Setter
 @ConfigurationProperties(prefix = "database")
 public class Database {
 	private String url;
 	private String driver;
-	private String username;
+	private String user;
 	private String password;
 }

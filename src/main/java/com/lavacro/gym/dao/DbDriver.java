@@ -32,25 +32,14 @@ public class DbDriver {
 
 	@Configuration
 	public class DbConfig {
-		private String username;
-		private String password;
-
 		@Bean
 		DataSource dataSource() {
-			username = database.getUsername();
-			password = database.getPassword();
-
-			String config_file = System.getenv("SECRETS_CONFIG_FILE");
-			if(config_file != null) {
-				getUserAndPassword(config_file);
-			}
-
 			HikariDataSource hds = DataSourceBuilder
 					.create()
 					.driverClassName(database.getDriver())
 					.url(database.getUrl())
-					.username(username)
-					.password(password)
+					.username(database.getUser())
+					.password(database.getPassword())
 					.type(HikariDataSource.class)
 					.build();
 			hds.setConnectionTestQuery("SELECT 1");
@@ -59,28 +48,6 @@ public class DbDriver {
 			hds.setMaximumPoolSize(10);
 			logger.info("Received database bean");
 			return hds;
-		}
-
-		private void getUserAndPassword(final String config_file) {
-			Map<String,String> vars = new HashMap<>();
-			try (
-				BufferedReader br = new BufferedReader(new FileReader(config_file))
-			) {
-				br.lines().forEach( line -> {
-					String[] params = line.split("=");
-					if(params.length == 2) {
-						vars.put(params[0], params[1]);
-					}
-				});
-			} catch(IOException e) {
-				logger.error("Error getting secrets: {}", e.getMessage());
-			}
-			if(vars.containsKey("user")) {
-				username = vars.get("user");
-			}
-			if(vars.containsKey("password")) {
-				password = vars.get("password");
-			}
 		}
 	}
 }
