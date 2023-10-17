@@ -46,7 +46,7 @@ spec:
           mountPath: "/var/tmp/vault"
       containers:
       - name: gym
-        image: "pi4apps:5000/gym:2.0.2"
+        image: "pi4apps:5000/gym:2.0.3"
         imagePullPolicy: IfNotPresent
         env:
         - name: profile
