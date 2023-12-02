@@ -26,6 +26,19 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'
 	testImplementation('org.springframework.boot:spring-boot-starter-test:3.1.0')
 	testImplementation('org.junit.jupiter:junit-jupiter-engine:5.9.2')
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testImplementation('junit:junit:4.13.2')
+	testImplementation('org.hsqldb:hsqldb')
+}
+
+tasks.named('test', Test) {
+	useJUnitPlatform()
+
+	maxHeapSize = '1G'
+
+	testLogging {
+		events "passed"
+	}
 }
 
 group = 'com.lavacro'
