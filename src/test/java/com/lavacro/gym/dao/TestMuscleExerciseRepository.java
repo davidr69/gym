@@ -18,12 +18,12 @@ import java.util.Optional;
 @DataJpaTest
 @AutoConfigureTestDatabase
 @ActiveProfiles(profiles = {"local"})
-public class TestMuscleExerciseRepository {
+class TestMuscleExerciseRepository {
 	@Autowired
 	private MuscleExerciseRepository muscleExerciseRepository;
 
 	@Test
-	public void testRepo() {
+	void testRepo() {
 		muscleExerciseRepository.save(
 			new Exercise(1, "Abs", "Torso Rotation")
 		);
@@ -31,7 +31,7 @@ public class TestMuscleExerciseRepository {
 				new Exercise(2, "Abs", "Hanging Knee Raise")
 		);
 		List<Exercise> exerciseList = muscleExerciseRepository.findAll();
-		Assertions.assertEquals(exerciseList.size(), 2);
+		Assertions.assertEquals(2, exerciseList.size());
 
 		Example<Exercise> example = Example.of(new Exercise(1, "Abs", "Torso Rotation"));
 		Optional<Exercise> optional = muscleExerciseRepository.findOne(example);

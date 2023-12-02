@@ -1,5 +1,5 @@
 function ajax(params) {
-	if(! 'url' in params) {
+	if(!('url' in params)) {
 		throw '"url" is required';
 	}
 
@@ -22,7 +22,7 @@ function ajax(params) {
 	if('data' in params) {
 		client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		let arr = [];
-		for([k,v] of Object.entries(params.data)) {
+		for([let k, let v] of Object.entries(params.data)) {
 			arr.push(k + '=' + encodeURIComponent(v));
 		}
 		client.send(arr.join('&'));

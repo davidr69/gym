@@ -64,7 +64,7 @@ public class ExerciseDao {
 				me.setExercises(new ArrayList<>());
 			}
 			Exercise exercise = new Exercise();
-			exercise.setExercise(e.getExercise());
+			exercise.setExerciseName(e.getExerciseName());
 			exercise.setId(e.getId());
 			me.getExercises().add(exercise);
 		}
@@ -91,7 +91,7 @@ public class ExerciseDao {
 			return resp;
 		} catch (SQLException e) {
 			logger.error("SQL exception: {}", e.getMessage());
-			return null;
+			return new ArrayList<>();
 		}
 	}
 

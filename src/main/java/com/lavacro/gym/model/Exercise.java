@@ -1,5 +1,6 @@
 package com.lavacro.gym.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -16,5 +17,6 @@ public class Exercise {
 	@Id
 	private Integer id;
 	private String muscle;
-	private String exercise;
+	@Column(name = "exercise")
+	private String exerciseName;
 }

@@ -34,12 +34,12 @@ export default class Render {
 
 	append_column(yrmon, data) {
 		let tr = document.getElementById('tableRecord');
-		var th = document.createElement('th');
+		let th = document.createElement('th');
 		let cellId = 'col' + yrmon;
 		th.setAttribute('id', cellId);
-		var year = yrmon.substring(0, 4);
-		var month = yrmon.substring(4);
-		var textNode = document.createTextNode(months[Number(month)] + ' ' + year);
+		let year = yrmon.substring(0, 4);
+		let month = yrmon.substring(4);
+		let textNode = document.createTextNode(months[Number(month)] + ' ' + year);
 		th.appendChild(textNode);
 		tr.appendChild(th);
 
