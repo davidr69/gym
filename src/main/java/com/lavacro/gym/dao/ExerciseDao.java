@@ -82,7 +82,7 @@ public class ExerciseDao {
 		try (
 				Connection conn = dataSource.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery()
 		) {
 			List<String> resp = new ArrayList<>();
 			while(rs.next()) {
