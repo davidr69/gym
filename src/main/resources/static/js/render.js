@@ -98,7 +98,7 @@ export default class Render {
 				let td = document.createElement('td');
 				td.setAttribute('class', 'exercise');
 				td.setAttribute('id', 'ex' + obj['id']);
-				let textNode = document.createTextNode(obj['exercise']);
+				let textNode = document.createTextNode(obj['exerciseName']);
 				td.appendChild(textNode);
 				tr.appendChild(td);
 /*	

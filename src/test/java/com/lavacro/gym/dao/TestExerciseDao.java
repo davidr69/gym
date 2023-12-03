@@ -1,5 +1,6 @@
 package com.lavacro.gym.dao;
 
+import com.lavacro.gym.model.Exercise;
 import com.lavacro.gym.model.ProgressDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,12 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Example;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -27,10 +26,7 @@ class TestExerciseDao {
 	@Autowired
 	private ExerciseDao exerciseDao;
 
-	private List<ProgressDTO> dtoList;
-
 	private void setup() {
-		dtoList = new ArrayList<>();
 		ProgressDTO progressDTO = new ProgressDTO();
 		progressDTO.setProgressId(1);
 		progressDTO.setExerciseId(1);
@@ -40,7 +36,6 @@ class TestExerciseDao {
 		progressDTO.setWeight(new BigDecimal("45.0"));
 		progressDTO.setRep1(4);
 		progressRepository.save(progressDTO);
-		dtoList.add(progressDTO);
 
 		progressDTO = new ProgressDTO();
 		progressDTO.setProgressId(2);
@@ -51,7 +46,6 @@ class TestExerciseDao {
 		progressDTO.setRep1(18);
 		progressDTO.setRep2(15);
 		progressRepository.save(progressDTO);
-		dtoList.add(progressDTO);
 
 		progressDTO = new ProgressDTO();
 		progressDTO.setProgressId(3);
@@ -62,16 +56,11 @@ class TestExerciseDao {
 		progressDTO.setWeight(new BigDecimal("140.0"));
 		progressDTO.setRep1(5);
 		progressRepository.save(progressDTO);
-		dtoList.add(progressDTO);
 	}
 
 	@Test
 	void testStats() {
 		setup();
-		ProgressDTO tuple = new ProgressDTO();
-		tuple.setMydate("1123");
-		Example<ProgressDTO> example = Example.of(tuple);
-
 		List<ProgressDTO> dto = exerciseDao.stats("202311");
 		Assertions.assertEquals(2, dto.size());
 	}
