@@ -1,0 +1,32 @@
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/elizabeth
+#  jpa:
+#    show-sql: false
+#    open-in-view: false
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+#        ddl-auto: update
+
+hibernate:
+  #dialect: org.hibernate.dialect.H2Dialect
+  dialect: org.hibernate.dialect.PostgreSQLDialect
+  hbm2ddl:
+    auto: create
+
+spring:
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:hsqldb:mem:testdb;sql.syntax_pgs=true
+    initialization-mode: always
+  jpa:
+    defer-datasource-initialization: true
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update

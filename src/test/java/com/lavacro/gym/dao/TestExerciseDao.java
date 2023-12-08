@@ -1,6 +1,5 @@
 package com.lavacro.gym.dao;
 
-import com.lavacro.gym.model.Exercise;
 import com.lavacro.gym.model.ProgressDTO;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

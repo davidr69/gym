@@ -13,10 +13,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Exercise {
+public class ExerciseDTO {
 	@Id
 	private Integer id;
 	private String muscle;
-	@Column(name = "exercise")
+	@Column(name = "exercise_name")
 	private String exerciseName;
 }
