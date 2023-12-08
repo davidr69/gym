@@ -132,3 +132,7 @@ INSERT INTO muscle VALUES(9, 'Hamstrings');
 INSERT INTO muscle VALUES(10, 'Calves');
 INSERT INTO muscle VALUES(11, 'Thights/Glutes');
 INSERT INTO muscle VALUES(12, 'Forearms');
+
+INSERT INTO allprogress (progid, exerciseid, exercise, muscle, mydate, weight, rep1) VALUES(1, 1, 'cross-body hammer curl', 'biceps', '202311', 45.0, 4);
+INSERT INTO allprogress (progid, exerciseid, exercise, muscle, mydate, rep1, rep2) VALUES(2, 2, 'hanging knee raise', 'abdominals', '202311', 18, 15);
+INSERT INTO allprogress (progid, exerciseid, exercise, muscle, mydate, weight, rep1) VALUES(3, 4, 'smith machine bench press', 'chest', '202310', 140.0, 5);
