@@ -51,14 +51,14 @@ main.init = function() {
 		let callback = function() {
 			return drawColumns('init');
 		};
-		for(var i = l.length - monthCount; i<l.length; i++) {
+		for(let i = l.length - monthCount; i<l.length; i++) {
 			getHeader(l[i], callback);
 		}
 	}
 
 	function drawColumns(params) {
 		let l = render.getMonths();
-		for(var i = l.length - monthCount; i<l.length; i++) {
+		for(let i = l.length - monthCount; i<l.length; i++) {
 			let yrmon = l[i];
 			render.column(yrmon, allData[yrmon]);
 		}
