@@ -6,18 +6,12 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 public class DbDriver {
@@ -25,8 +19,7 @@ public class DbDriver {
 
 	private final Database database;
 
-	@Autowired
-	public DbDriver(Database database) {
+	DbDriver(Database database) {
 		this.database = database;
 	}
 

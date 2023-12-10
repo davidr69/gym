@@ -5,10 +5,9 @@ import lombok.Setter;
 
 import java.util.List;
 
-
 @Getter
 @Setter
-public class Muscle {
+public class MuscleDTO {
 	private String description;
-	private List<Exercise> exercises;
+	private List<ExerciseDTO> exercises;
 }

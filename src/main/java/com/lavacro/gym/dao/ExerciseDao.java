@@ -1,7 +1,7 @@
 package com.lavacro.gym.dao;
 
-import com.lavacro.gym.model.Exercise;
-import com.lavacro.gym.model.Muscle;
+import com.lavacro.gym.model.ExerciseDTO;
+import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +37,7 @@ public class ExerciseDao {
 		this.muscleExerciseRepository = muscleExerciseRepository;
 	}
 
-	public List<Muscle> allExercises() {
+	public List<MuscleDTO> allExercises() {
 		/*
 		 *     muscle     |             exercise             | id
 		 * ---------------+----------------------------------+-----
@@ -47,24 +47,24 @@ public class ExerciseDao {
 		 *  Biceps        | Concentration curl               |  41
 		 */
 
-		List<Exercise> exerciseList = muscleExerciseRepository.getAllExercises();
+		List<ExerciseDTO> exerciseList = muscleExerciseRepository.getAllExercises();
 
-		List<Muscle> resp = new ArrayList<>();
-		Muscle me = null;
+		List<MuscleDTO> resp = new ArrayList<>();
+		MuscleDTO me = null;
 		String prevMuscle = null;
 
-		for(Exercise e: exerciseList) {
+		for(ExerciseDTO e: exerciseList) {
 			if (prevMuscle == null || !prevMuscle.equals(e.getMuscle())) {
 				if (prevMuscle != null) {
 					resp.add(me);
 				}
 				prevMuscle = e.getMuscle();
-				me = new Muscle();
+				me = new MuscleDTO();
 				me.setDescription(e.getMuscle());
 				me.setExercises(new ArrayList<>());
 			}
-			Exercise exercise = new Exercise();
-			exercise.setExercise(e.getExercise());
+			ExerciseDTO exercise = new ExerciseDTO();
+			exercise.setExerciseName(e.getExerciseName());
 			exercise.setId(e.getId());
 			me.getExercises().add(exercise);
 		}
@@ -82,7 +82,7 @@ public class ExerciseDao {
 		try (
 				Connection conn = dataSource.getConnection();
 				PreparedStatement ps = conn.prepareStatement(sql);
-				ResultSet rs = ps.executeQuery();
+				ResultSet rs = ps.executeQuery()
 		) {
 			List<String> resp = new ArrayList<>();
 			while(rs.next()) {
@@ -91,7 +91,7 @@ public class ExerciseDao {
 			return resp;
 		} catch (SQLException e) {
 			logger.error("SQL exception: {}", e.getMessage());
-			return null;
+			return new ArrayList<>();
 		}
 	}
 

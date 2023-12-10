@@ -3,8 +3,8 @@ package com.lavacro.gym.controllers.rest;
 import com.lavacro.gym.dao.ExerciseDao;
 
 import com.lavacro.gym.dao.MuscleExerciseRepository;
-import com.lavacro.gym.model.Exercise;
-import com.lavacro.gym.model.Muscle;
+import com.lavacro.gym.model.ExerciseDTO;
+import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +30,8 @@ public class Api {
 	}
 
 	@GetMapping(value = "/exercises")
-	public ResponseEntity<List<Muscle>> allExercises() {
-		final List<Muscle> resp = exerciseDao.allExercises();
+	public ResponseEntity<List<MuscleDTO>> allExercises() {
+		final List<MuscleDTO> resp = exerciseDao.allExercises();
 		if(resp == null) {
 			return new ResponseEntity<>(null, null, HttpStatus.BAD_REQUEST);
 		}
@@ -57,7 +57,7 @@ public class Api {
 	}
 
 	@GetMapping(value = "/foo")
-	public List<Exercise> foo() {
+	public List<ExerciseDTO> foo() {
 		logger.info("Hello?");
 		return muscleExerciseRepository.findAll(
 				Sort.by(Sort.Direction.ASC, "muscle").and(Sort.by(Sort.Direction.ASC, "exercise"))
