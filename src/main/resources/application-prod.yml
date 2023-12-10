@@ -1,9 +1,10 @@
+database:
+  url: jdbc:postgresql://prod-db.lavacro.com:5432/workout
+
 spring:
-  cloud:
-    vault:
-      authentication: TOKEN
-      host: nube.lavacro.com
-      port: 8201
-      scheme: http
-      cubbyhole: enabled
-      role: readonly
+  jpa:
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update

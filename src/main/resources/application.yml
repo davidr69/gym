@@ -1,3 +1,4 @@
+---
 server:
   session:
     timeout: 300
@@ -10,6 +11,10 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: health,prometheus,mappings
     health:
+      enabled: true
+    prometheus:
+      enabled: true
+    mappings:
       enabled: true
