@@ -3,8 +3,7 @@ package com.lavacro.gym.dao;
 import com.lavacro.gym.model.ExerciseDTO;
 import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -18,23 +17,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Slf4j
 public class ExerciseDao {
-	private static final Logger logger = LoggerFactory.getLogger(ExerciseDao.class);
-
 	private final DataSource dataSource;
 	private final MuscleExerciseRepository muscleExerciseRepository;
-
 	private final ProgressRepository progressRepository;
 
 	public ExerciseDao(
 			DataSource dataSource,
-			ProgressRepository progressRepository,
-			MuscleExerciseRepository muscleExerciseRepository
+			MuscleExerciseRepository muscleExerciseRepository,
+			ProgressRepository progressRepository
 	) {
 
 		this.dataSource = dataSource;
-		this.progressRepository = progressRepository;
 		this.muscleExerciseRepository = muscleExerciseRepository;
+		this.progressRepository = progressRepository;
 	}
 
 	public List<MuscleDTO> allExercises() {
@@ -73,11 +70,12 @@ public class ExerciseDao {
 	}
 
 	public List<String> allMonths() {
-		String sql =
-				"WITH x AS (SELECT DISTINCT mydate FROM progress) " +
-				"SELECT CAST(date_part('year', mydate) AS varchar) || LPAD(CAST(date_part('month', mydate) AS varchar), 2, '0') AS yrmon " +
-				"FROM x " +
-				"ORDER BY mydate";
+		String sql = """
+			WITH x AS (SELECT DISTINCT mydate FROM progress)
+			SELECT CAST(date_part('year', mydate) AS varchar) || LPAD(CAST(date_part('month', mydate) AS varchar), 2, '0') AS yrmon
+			FROM x
+			ORDER BY mydate
+		""";
 
 		try (
 				Connection conn = dataSource.getConnection();
@@ -90,7 +88,7 @@ public class ExerciseDao {
 			}
 			return resp;
 		} catch (SQLException e) {
-			logger.error("SQL exception: {}", e.getMessage());
+			log.error("SQL exception: {}", e.getMessage());
 			return new ArrayList<>();
 		}
 	}
