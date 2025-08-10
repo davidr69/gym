@@ -1,9 +1,8 @@
 package com.lavacro.gym.controllers.rest;
 
-import com.lavacro.gym.dao.ExerciseDao;
-
 import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
+import com.lavacro.gym.service.ExerciseService;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
@@ -17,16 +16,15 @@ import java.util.List;
 @RestController
 @Slf4j
 public class Api {
-	private final ExerciseDao exerciseDao;
+	private final ExerciseService exerciseService;
 
-	public Api(ExerciseDao exerciseDao)
-	{
-		this.exerciseDao = exerciseDao;
+	public Api(ExerciseService exerciseService) {
+		this.exerciseService = exerciseService;
 	}
 
 	@GetMapping(value = "/exercises")
 	public ResponseEntity<List<MuscleDTO>> allExercises() {
-		final List<MuscleDTO> resp = exerciseDao.allExercises();
+		final List<MuscleDTO> resp = exerciseService.allExercises();
 		if(resp == null) {
 			return new ResponseEntity<>(null, null, HttpStatus.BAD_REQUEST);
 		}
@@ -35,7 +33,7 @@ public class Api {
 
 	@GetMapping(value = "/months")
 	public ResponseEntity<List<String>> allMonths() {
-		final List<String> resp = exerciseDao.allMonths();
+		final List<String> resp = exerciseService.allMonths();
 		if(resp == null) {
 			return new ResponseEntity<>(null, null, HttpStatus.BAD_REQUEST);
 		}
@@ -44,7 +42,7 @@ public class Api {
 
 	@GetMapping(value = "/stats/{when}")
 	public ResponseEntity<List<ProgressDTO>> stats(@PathVariable("when") final String when) {
-		final List<ProgressDTO> resp = exerciseDao.stats(when);
+		final List<ProgressDTO> resp = exerciseService.stats(when);
 		if(resp == null) {
 			return new ResponseEntity<>(null, null, HttpStatus.BAD_REQUEST);
 		}

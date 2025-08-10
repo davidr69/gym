@@ -25,14 +25,14 @@ export default class Render {
 			// all information has been gathered; now need to make a decision
 			if(/*nlBefore.length == 0 &&*/ nlAfter.length === 0) {
 				// just a simple add
-				this.append_column(yrmon, data); // offset from muscle category is 0
+				this.#append_column(yrmon, data); // offset from muscle category is 0
 			}
 		} else {
 			//
 		}
 	}
 
-	append_column(yrmon, data) {
+	#append_column(yrmon, data) {
 		let tr = document.getElementById('tableRecord');
 		let th = document.createElement('th');
 		let cellId = 'col' + yrmon;
@@ -95,9 +95,11 @@ export default class Render {
 			section['exercises'].forEach(obj => {
 				let tr = document.createElement('tr');
 				tr.setAttribute('class', 'data');
+
 				let td = document.createElement('td');
 				td.setAttribute('class', 'exercise');
 				td.setAttribute('id', 'ex' + obj['id']);
+
 				let textNode = document.createTextNode(obj['exerciseName']);
 				td.appendChild(textNode);
 				tr.appendChild(td);

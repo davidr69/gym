@@ -6,10 +6,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,prometheus,mappings
-    health:
-      enabled: true
-    prometheus:
-      enabled: true
-    mappings:
-      enabled: true
+        include: health,prometheus
