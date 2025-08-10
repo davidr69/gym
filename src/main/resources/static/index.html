@@ -5,18 +5,17 @@
 	<title>Workout editor</title>
 	<link type="text/css" rel="stylesheet" href="css/fonts.css">
 	<link type="text/css" rel="stylesheet" href="css/format.css">
-	<script type="text/javascript" src="js/ajax.js"></script>
-	<script type="text/javascript">
-			let loc = window.location.toString();
-			if(loc.substring(loc.length - 1) != '/') {
-				let newloc = loc + '/';
-				window.location = newloc;
-			}
 
-			const monthCount = Number("{{ columns }}");
-		</script>
-	<script type="module" src="js/imports.js"></script>
-	<script type="module" src="js/main.js"></script>
+	<script type="module" src="js/workout.js"></script>
+
+    <script type="module">
+        const workoutJS = './js/workout.js';
+        const { default: Workout } = await import(workoutJS);
+        window.workout = new Workout();
+    </script>
+
+
+
 </head>
 <body>
 <table style="border-spacing: 1px; padding: 2px" id="table" about="table">
