@@ -14,7 +14,7 @@ export default class Render {
 		let nl = document.querySelectorAll(col);
 		let nlBefore;
 		let nlAfter;
-		if(nl.length == 0) {
+		if(nl.length === 0) {
 			let pos = this.monthList.indexOf(yrmon);
 			if(pos > 0) {
 				nlBefore = document.querySelectorAll('#col' + this.monthList[pos - 1]);
@@ -23,7 +23,7 @@ export default class Render {
 				nlAfter = document.querySelectorAll('#col' + this.monthList[pos + 1]);
 			}
 			// all information has been gathered; now need to make a decision
-			if(/*nlBefore.length == 0 &&*/ nlAfter.length == 0) {
+			if(/*nlBefore.length == 0 &&*/ nlAfter.length === 0) {
 				// just a simple add
 				this.append_column(yrmon, data); // offset from muscle category is 0
 			}
@@ -43,14 +43,14 @@ export default class Render {
 		th.appendChild(textNode);
 		tr.appendChild(th);
 
-		document.querySelectorAll('.exercise').forEach(function(el, idx, parent) {
+		document.querySelectorAll('.exercise').forEach(function(el, idx) {
 			let td = document.createElement('td');
 			td.setAttribute('id', 'col' + yrmon);
 
 			// extract the ID
 			let cellID = Number(el.getAttribute('id').substring(2));
-			let subdata = data.find(el => el['exerciseID'] == cellID);
-			if(subdata == undefined) {
+			let subdata = data.find(el => el['exerciseID'] === cellID);
+			if(subdata === undefined) {
 				td.innerHTML = '&nbsp;';
 			} else {
 				let info;
@@ -101,14 +101,14 @@ export default class Render {
 				let textNode = document.createTextNode(obj['exerciseName']);
 				td.appendChild(textNode);
 				tr.appendChild(td);
-/*	
+/*
 				for(var i = 0; i < monthCount; i++) {
 					td = document.createElement('td');
 					td.setAttribute('id', 'col' + this.monthList[i]);
 					td.innerHTML = '&nbsp;';
 					tr.appendChild(td);
 				}
-*/	
+*/
 				th.appendChild(tr);
 			});
 		});
