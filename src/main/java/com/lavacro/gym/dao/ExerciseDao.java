@@ -24,16 +24,12 @@ public class ExerciseDao {
 	private final DataSource dataSource;
 	private final MuscleExerciseRepository muscleExerciseRepository;
 
-	private final ProgressRepository progressRepository;
-
 	public ExerciseDao(
 			DataSource dataSource,
-			ProgressRepository progressRepository,
 			MuscleExerciseRepository muscleExerciseRepository
 	) {
 
 		this.dataSource = dataSource;
-		this.progressRepository = progressRepository;
 		this.muscleExerciseRepository = muscleExerciseRepository;
 	}
 
@@ -95,21 +91,21 @@ public class ExerciseDao {
 		}
 	}
 
-	public List<ProgressDTO> stats(final String when) {
-		/*
-			SELECT exercise, exerciseID, muscle, mydate, weight, rep1, rep2, progid
-			FROM allprogress
-			WHERE mydate = ?
-			ORDER BY muscle, exercise
-		*/
-
-		ProgressDTO tuple = new ProgressDTO();
-		tuple.setMydate(when);
-		Example<ProgressDTO> example = Example.of(tuple);
-		return progressRepository.findAll(
-				example,
-				Sort.by(Sort.Direction.ASC, "muscle").and(Sort.by(Sort.Direction.ASC, "exercise"))
-
-		);
-	}
+//	public List<ProgressDTO> stats(final String when) {
+//		/*
+//			SELECT exercise, exerciseID, muscle, mydate, weight, rep1, rep2, progid
+//			FROM allprogress
+//			WHERE mydate = ?
+//			ORDER BY muscle, exercise
+//		*/
+//
+//		ProgressDTO tuple = new ProgressDTO();
+//		tuple.setMydate(when);
+//		Example<ProgressDTO> example = Example.of(tuple);
+//		return progressRepository.findAll(
+//				example,
+//				Sort.by(Sort.Direction.ASC, "muscle").and(Sort.by(Sort.Direction.ASC, "exercise"))
+//
+//		);
+//	}
 }
