@@ -23,22 +23,19 @@ spec:
           sizeLimit: 1Mi
       initContainers:
       - name: vault-retrieve
-        image: "pi4apps:5000/vault-retrieve:1.2.1"
+        image: "pi4apps:5000/vault-retrieve:3.0.1"
         imagePullPolicy: IfNotPresent
         env:
-        - name: SPRING_CLOUD_CONFIG_NAME
+        - name: MOUNT_PATH
+          value: "/var/tmp/vault"
+        - name: SPRING_APPLICATION_NAME
           value: vault
         - name: SPRING_PROFILES_ACTIVE
           value: dbdev
-        - name: SPRING_CLOUD_LABEL
+        - name: SPRING_CLOUD_CONFIG_LABEL
           value: main
         - name: SPRING_CONFIG_IMPORT
           value: "configserver:http://configs.lavacro.net:9080/"
-        - name: SPRING_CLOUD_VAULT_TOKEN
-          valueFrom:
-            secretKeyRef:
-              name: vault-secrets
-              key: token
         volumeMounts:
         - name: vault-token
           mountPath: "/var/tmp/vault"
