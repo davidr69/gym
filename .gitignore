@@ -52,3 +52,4 @@ Thumbs.db
 /.settings
 /build/
 /.gradle/
+/bin/
