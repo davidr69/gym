@@ -1,14 +1,12 @@
 package com.lavacro.gym.service;
 
-import com.lavacro.gym.repositories.MuscleExerciseRepository;
-import com.lavacro.gym.repositories.ProgressRepository;
-import com.lavacro.gym.repositories.YrMonRepository;
+import com.lavacro.gym.entities.ProgressEntity;
+import com.lavacro.gym.repositories.*;
 import com.lavacro.gym.entities.MonthProgressEntity;
 import com.lavacro.gym.model.ExerciseDTO;
 import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
 import com.lavacro.gym.model.YrMonDTO;
-import com.lavacro.gym.repositories.MonthProgressRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -19,20 +17,23 @@ import java.util.List;
 @Service
 public class ExerciseService {
 	private final MuscleExerciseRepository muscleExerciseRepository;
-	private final ProgressRepository progressRepository;
+	private final AllProgressRepository allProgressRepository;
 	private final YrMonRepository yrMonRepository;
 	private final MonthProgressRepository monthProgressRepository;
+	private final ProgressRepository progressRepository;
 
 	public ExerciseService(
 			MuscleExerciseRepository muscleExerciseRepository,
-			ProgressRepository progressRepository,
+			AllProgressRepository allProgressRepository,
 			YrMonRepository yrMonRepository,
-			MonthProgressRepository monthProgressRepository
+			MonthProgressRepository monthProgressRepository,
+			ProgressRepository progressRepository
 	) {
 		this.muscleExerciseRepository = muscleExerciseRepository;
-		this.progressRepository = progressRepository;
+		this.allProgressRepository = allProgressRepository;
 		this.yrMonRepository = yrMonRepository;
 		this.monthProgressRepository = monthProgressRepository;
+		this.progressRepository = progressRepository;
 	}
 
 	public List<MuscleDTO> allExercises() {
@@ -74,7 +75,7 @@ public class ExerciseService {
 		ProgressDTO tuple = new ProgressDTO();
 		tuple.setMydate(when);
 		Example<ProgressDTO> example = Example.of(tuple);
-		return progressRepository.findAll(
+		return allProgressRepository.findAll(
 			example,
 			Sort.by(Sort.Direction.ASC, "muscle").and(Sort.by(Sort.Direction.ASC, "exercise"))
 
@@ -91,6 +92,10 @@ public class ExerciseService {
 	}
 
 	public ProgressDTO getProgress(Integer id) {
-		return progressRepository.findByProgressId(id);
+		return allProgressRepository.findByProgressId(id);
+	}
+
+	public void saveProgress(ProgressEntity progress) {
+		progressRepository.save(progress);
 	}
 }

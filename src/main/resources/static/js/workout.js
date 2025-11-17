@@ -22,9 +22,25 @@ export default class Workout {
 	allData = {};
 	count = 0;
 	monthCount = 6;
+	exercises;
 
 	constructor() {
 		this.#drawTable();
+
+		const formatter = new Intl.DateTimeFormat('en', { month: 'long' });
+
+		const months = Array.from({ length: 12 }, (_, i) =>
+			formatter.format(new Date(2000, i, 1)));
+
+		const today = new Date();
+		const currentMonth = today.getMonth();
+		const monthDropDown = document.getElementById("choose_month");
+
+		for(let month = 0; month < 12; month++) {
+			let option = new Option(months[month], String(month + 1), month === currentMonth);
+			monthDropDown.add(option)
+		}
+		document.getElementById("choose_year").value = today.getFullYear();
 	}
 
 	#getMonths = () => {
@@ -71,12 +87,53 @@ export default class Workout {
 	#drawTable = () => {
 		// get list of all exercises (not activity)
 		fetch('exercises').then(response => {
+			/*
+				Data looks like:
+
+				[{
+					"description": "Abdominals",
+					"exercises": [{
+						"id": 93,
+						"muscle": null,
+						"exerciseName": "Ab Carver"
+					},{
+						"id": 92,
+						"muscle": null,
+						"exerciseName": "Ab Coaster"
+					}
+				}]
+			 */
 			response.json().then(data => {
 				// draw the left side muscle/category list
 				this.render.drawMusclesAndExercises(data);
 				this.#getMonths();
+				this.exercises = data;
+				this.#populateMuscles()
 			});
 		});
+	}
+
+	#populateMuscles = () => {
+		let dd = document.getElementById('choose_muscle');
+		dd.length = 0;
+		let muscles = this.exercises.map(item => item.description).sort();
+		for(let muscle of muscles) {
+			let option = new Option(muscle, muscle);
+			dd.add(option);
+		}
+		this.populateExercises();
+	}
+
+	populateExercises = () => {
+		let dd = document.getElementById('choose_exercise');
+		dd.length = 0;
+		let muscle = document.getElementById('choose_muscle').value;
+		let exercises = this.exercises.filter(item => item.description === muscle)[0].exercises;
+		let data = exercises.map(item => [item['id'], item['exerciseName']] );
+		for (let datum of data) {
+			let option = new Option(datum[1], datum[0]);
+			dd.add(option);
+		}
 	}
 
 	rewind = () => {
@@ -90,5 +147,40 @@ export default class Workout {
 	edit = (id) => {
 		let url = `edit.html?id=${id}`;
 		window.open(url, "Edit/Delete", "width=750,height=600");
+	}
+
+	save = () => {
+		const exercise = document.getElementById('choose_exercise').value;
+		const month = document.getElementById('choose_month').value;
+		const year = document.getElementById('choose_year').value;
+		const weight = document.getElementById('weight').value;
+		const rep1 = document.getElementById('rep1').value;
+		const rep2 = document.getElementById('rep2').value;
+
+		const dateStr = `${year}${month.padStart(2, '0')}`;
+
+		const post_headers = {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		};
+
+		fetch('activity', {
+			method: 'POST',
+			body: JSON.stringify({
+				exercise: Number(exercise),
+				mydate: dateStr,
+				weight: Number(weight),
+				rep1: Number(rep1),
+				rep2: Number(rep2)
+			}),
+			headers: post_headers
+		}).then(response => {
+			response.json().then(data => {
+				console.log(data);
+				window.location.reload();
+			})
+		}).catch(error => {
+			console.log(error);
+		});
 	}
 };

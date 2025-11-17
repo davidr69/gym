@@ -1,6 +1,8 @@
 package com.lavacro.gym.controllers.rest;
 
 import com.lavacro.gym.entities.MonthProgressEntity;
+import com.lavacro.gym.entities.ProgressEntity;
+import com.lavacro.gym.model.GenericResponse;
 import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
 import com.lavacro.gym.service.ExerciseService;
@@ -8,10 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,8 +56,17 @@ public class Api {
 		return new ResponseEntity<>(exerciseService.getMonthProgress(year, month), null, HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/get_activity")
+	@GetMapping(value = "/activity")
 	public ResponseEntity<ProgressDTO> getActivity(@RequestParam("id") Integer id) {
 		return new ResponseEntity<>(exerciseService.getProgress(id), null, HttpStatus.OK);
+	}
+
+	@PostMapping(value = "/activity")
+	public ResponseEntity<GenericResponse> saveActivity(@RequestBody ProgressEntity progress) {
+		exerciseService.saveProgress(progress);
+		GenericResponse resp = new GenericResponse();
+		resp.setCode(0);
+		resp.setMessage("SUCCESS");
+		return new ResponseEntity<>(resp, null, HttpStatus.OK);
 	}
 }
