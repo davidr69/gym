@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProgressRepository extends JpaRepository<ProgressDTO, Integer> {
+	ProgressDTO findByProgressId(Integer id);
 }

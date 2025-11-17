@@ -89,4 +89,8 @@ public class ExerciseService {
 	public List<MonthProgressEntity> getMonthProgress(Integer year, Integer month) {
 		return monthProgressRepository.findByYearAndMonth(year, month);
 	}
+
+	public ProgressDTO getProgress(Integer id) {
+		return progressRepository.findByProgressId(id);
+	}
 }

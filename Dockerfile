@@ -1,7 +1,7 @@
-FROM pi4apps:5000/openjdk:17.0.2-slim
+FROM pi4apps:5000/openjdk:21-ea-27-slim
 
-COPY target/*.jar /app/
+COPY build/libs/gym-3.0.0.jar /app/
 WORKDIR /app
 USER nobody
 
-CMD java -Dspring.profiles.active="$profile" -Dspring.config.additional-location="$additional_properties" -jar gym-2.1.0.jar
+ENTRYPOINT ["/bin/sh", "-c", "java -Dspring.profiles.active=$profile -Dspring.config.additional-location=$additional_properties -jar gym-3.0.0.jar"]

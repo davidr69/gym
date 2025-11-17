@@ -86,4 +86,9 @@ export default class Workout {
 	forward = () => {
 		//
 	}
+
+	edit = (id) => {
+		let url = `edit.html?id=${id}`;
+		window.open(url, "Edit/Delete", "width=750,height=600");
+	}
 };

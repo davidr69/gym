@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Edit/delete entry</title>
+
+	<script src="./js/common.js"></script>
+	<script>
+		function confirm_del() {
+			if(confirm("Do you really want to remove this")) {
+				let f = document.forms[0];
+				f.action.value = "del";
+				f.submit();
+			}
+		}
+
+		function do_it() {
+			let f=document.forms[0];
+			f.action.value="mod";
+			f.submit();
+		}
+
+		draw = (el, val, useValue = false) => {
+			if(val !== null) {
+				if(useValue) {
+					document.getElementById(el).value = val;
+				} else {
+					document.getElementById(el).innerHTML = val;
+				}
+			}
+		}
+
+		let params = parseUrlParams();
+		let id = params['id'];
+		fetch(`get_activity?id=${id}`).then(resp => {
+			resp.json().then(data => {
+				draw('muscle', data['muscle']);
+				draw('exercise', data['exercise']);
+				draw('weight', data['weight'], true);
+				draw('rep1', data['rep1'], true);
+				draw('rep2', data['rep2'], true);
+				let mon = data['mydate'].substring(4);
+				let yr = data['mydate'].substring(0, 4);
+				draw('month', mon);
+				draw('year', yr);
+			})
+		})
+
+	</script>
+</head>
+<body>
+
+<strong>Muscle:</strong> <span id="muscle"></span><br/>
+<strong>Exercise:</strong> <span id="exercise"></span><br/>
+<strong>Date:</strong> <span id="month"></span>/<span id="year"></span><br/>
+<strong>Weight:</strong> <label for="weight"></label><input type="number" size="6" maxlength="6" id="weight"><br/>
+<strong>Rep1:</strong> <label for="rep1"></label><input type="number" size="4" maxlength="4" id="rep1"><br>
+<strong>Rep2:</strong> <label for="rep2"></label><input type="number" size="4" maxlength="4" id="rep2"><br/>
+<input type="button" value=" Make it so! " onClick="do_it()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<input type="button" value=" Delete this " onClick="confirm_del()">
+
+</body>
+</html>

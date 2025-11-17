@@ -40,7 +40,7 @@ tasks.named('test', Test) {
 }
 
 group = 'com.lavacro'
-version = '2.1.0'
+version = '3.0.0'
 description = 'gym'
 java.sourceCompatibility = JavaVersion.VERSION_21
 

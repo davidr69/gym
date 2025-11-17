@@ -56,4 +56,9 @@ public class Api {
 		@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
 		return new ResponseEntity<>(exerciseService.getMonthProgress(year, month), null, HttpStatus.OK);
 	}
+
+	@GetMapping(value = "/get_activity")
+	public ResponseEntity<ProgressDTO> getActivity(@RequestParam("id") Integer id) {
+		return new ResponseEntity<>(exerciseService.getProgress(id), null, HttpStatus.OK);
+	}
 }

@@ -57,7 +57,7 @@ export default class Render {
 				td.innerHTML = '&nbsp;';
 			} else {
 				let anchor = document.createElement('a');
-				anchor.setAttribute('href', 'javascript:render.edit(' + idx + ')');
+				anchor.setAttribute('href', 'javascript:globalThis.workout.edit(' + row['id'] + ')');
 
 				let disp;
 				if(row['weight'] === null) {
