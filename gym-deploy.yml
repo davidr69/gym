@@ -41,11 +41,11 @@ spec:
           mountPath: "/var/tmp/vault"
       containers:
       - name: gym
-        image: "registry:5000/gym:3.1.0"
+        image: "registry:5000/gym:3.0.1"
         imagePullPolicy: IfNotPresent
         env:
         - name: profile
-          value: pi
+          value: prod
         - name: additional_properties
           value: "/var/tmp/vault/vault.properties"
         volumeMounts:

@@ -8,3 +8,5 @@ spring:
   datasource:
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://dev-db.lavacro.net:5432/workout
+    username: "${database.user}"
+    password: "${database.password}"
