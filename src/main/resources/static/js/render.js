@@ -49,15 +49,16 @@ export default class Render {
 
 		let idx = 0;
 		for(let el of document.querySelectorAll('.exercise')) {
+			// find all the left-pane exercises and draw to their right
 			let row = data[idx++];
-			// row should have {"id":93,"muscle":"Abdominals","muscleId":8,"exercise":"Ab Carver","weight":null,"rep1":null,"rep2":null}
+			// row should have {"id":93,"muscle":"Abdominals","muscleId":8,"exercise":"Ab Carver","weight":null,"rep1":null,"rep2":null,"progId":123}
 			let td = document.createElement('td');
 			td.setAttribute('id', 'col' + yrmon);
 			if(row['weight'] === null && row['rep1'] === null && row['rep2'] === null) {
 				td.innerHTML = '&nbsp;';
 			} else {
 				let anchor = document.createElement('a');
-				anchor.setAttribute('href', 'javascript:globalThis.workout.edit(' + row['id'] + ')');
+				anchor.setAttribute('href', 'javascript:globalThis.workout.edit(' + row['progId'] + ')');
 
 				let disp;
 				if(row['weight'] === null) {

@@ -41,7 +41,7 @@ spec:
           mountPath: "/var/tmp/vault"
       containers:
       - name: gym
-        image: "registry:5000/gym:3.0.1"
+        image: "registry:5000/gym:3.0.2"
         imagePullPolicy: IfNotPresent
         env:
         - name: profile

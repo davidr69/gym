@@ -11,7 +11,8 @@ import java.util.List;
 @Repository
 public interface MonthProgressRepository extends JpaRepository<MonthProgressEntity,Integer> {
 	@Query(value = """
-		SELECT e.id, m.description AS muscle, m.id AS muscle_id, e.description AS exercise, p.weight, p.rep1, p.rep2
+		SELECT e.id, m.description AS muscle, m.id AS muscle_id, e.description AS exercise, p.weight, p.rep1, p.rep2,
+				p.id AS progress_id
 		FROM app.exercise e
 		JOIN app.muscle m ON e.muscle = m.id
 		LEFT JOIN app.progress p ON e.id = p.exercise
