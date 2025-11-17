@@ -1,6 +1,7 @@
 package com.lavacro.gym.dao;
 
 import com.lavacro.gym.model.ExerciseDTO;
+import com.lavacro.gym.repositories.MuscleExerciseRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

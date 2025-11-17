@@ -1,4 +1,4 @@
-package com.lavacro.gym.dao;
+package com.lavacro.gym.repositories;
 
 import com.lavacro.gym.model.ProgressDTO;
 import org.springframework.data.jpa.repository.JpaRepository;

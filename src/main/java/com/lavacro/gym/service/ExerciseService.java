@@ -1,12 +1,14 @@
 package com.lavacro.gym.service;
 
-import com.lavacro.gym.dao.MuscleExerciseRepository;
-import com.lavacro.gym.dao.ProgressRepository;
-import com.lavacro.gym.dao.YrMonRepository;
+import com.lavacro.gym.repositories.MuscleExerciseRepository;
+import com.lavacro.gym.repositories.ProgressRepository;
+import com.lavacro.gym.repositories.YrMonRepository;
+import com.lavacro.gym.entities.MonthProgressEntity;
 import com.lavacro.gym.model.ExerciseDTO;
 import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
 import com.lavacro.gym.model.YrMonDTO;
+import com.lavacro.gym.repositories.MonthProgressRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -19,15 +21,18 @@ public class ExerciseService {
 	private final MuscleExerciseRepository muscleExerciseRepository;
 	private final ProgressRepository progressRepository;
 	private final YrMonRepository yrMonRepository;
+	private final MonthProgressRepository monthProgressRepository;
 
 	public ExerciseService(
 			MuscleExerciseRepository muscleExerciseRepository,
 			ProgressRepository progressRepository,
-			YrMonRepository yrMonRepository
+			YrMonRepository yrMonRepository,
+			MonthProgressRepository monthProgressRepository
 	) {
 		this.muscleExerciseRepository = muscleExerciseRepository;
 		this.progressRepository = progressRepository;
 		this.yrMonRepository = yrMonRepository;
+		this.monthProgressRepository = monthProgressRepository;
 	}
 
 	public List<MuscleDTO> allExercises() {
@@ -79,5 +84,9 @@ public class ExerciseService {
 	public List<String> allMonths() {
 		List<YrMonDTO> data = yrMonRepository.getYrMon();
 		return data.stream().map(YrMonDTO::getYrmon).toList();
+	}
+
+	public List<MonthProgressEntity> getMonthProgress(Integer year, Integer month) {
+		return monthProgressRepository.findByYearAndMonth(year, month);
 	}
 }

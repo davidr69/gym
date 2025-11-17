@@ -1,5 +1,6 @@
 package com.lavacro.gym.controllers.rest;
 
+import com.lavacro.gym.entities.MonthProgressEntity;
 import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
 import com.lavacro.gym.service.ExerciseService;
@@ -9,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -47,5 +49,11 @@ public class Api {
 			return new ResponseEntity<>(null, null, HttpStatus.BAD_REQUEST);
 		}
 		return new ResponseEntity<>(resp, null, HttpStatus.OK);
+	}
+
+	@GetMapping(value = "/progress")
+	public ResponseEntity<List<MonthProgressEntity>> progress(
+		@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
+		return new ResponseEntity<>(exerciseService.getMonthProgress(year, month), null, HttpStatus.OK);
 	}
 }
