@@ -1,7 +1,7 @@
 /**
  * The steps that need to be performed are:
- * 1. retrieve a list of all month/years
- * 2. get a list of all exercises
+ * 1. get a list of all exercises
+ * 2. retrieve a list of all month/years
  *
  * After BOTH of those operations complete, the statistics can be populated:
  * 3. retrieve that status for the last n columns iteratively and asynchronously
@@ -18,32 +18,28 @@
 import Render from "./render.js";
 
 export default class Workout {
-	render;
-	allData;
-	count;
+	render = new Render();
+	allData = {};
+	count = 0;
 	monthCount = 6;
 
 	constructor() {
-		this.#init();
-	}
-
-	#init = () => {
-		this.render = null;
-		this.allData = {};
-		this.count = 0;
 		this.#drawTable();
 	}
 
 	#getMonths = () => {
  		fetch('months').then(response => {
 			response.json().then(data => {
-				this.render = new Render(data);
+				this.render.init(data);
+				this.#drawHeaders();
 			});
 		});
     }
 
 	#getHeader = (when, cb) => {
-		fetch(`stats/${when}`).then(response => {
+		const year = when.substring(0,4);
+		const month = when.substring(4);
+		fetch(`progress?year=${year}&month=${month}`).then(response => {
 			response.json().then(data => {
 				this.allData[when] = data;
 				if(--this.count === 0) {
@@ -73,13 +69,21 @@ export default class Workout {
 	}
 
 	#drawTable = () => {
-		this.#getMonths();
-
+		// get list of all exercises (not activity)
 		fetch('exercises').then(response => {
 			response.json().then(data => {
-				this.render.categories(data);
-				this.#drawHeaders();
+				// draw the left side muscle/category list
+				this.render.drawMusclesAndExercises(data);
+				this.#getMonths();
 			});
 		});
+	}
+
+	rewind = () => {
+		//
+	}
+
+	forward = () => {
+		//
 	}
 };

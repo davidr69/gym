@@ -1,7 +1,11 @@
 const months = [null, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 export default class Render {
-	constructor(monthList) {
+	monthList;
+
+	constructor() { }
+
+	init(monthList) {
 		this.monthList = monthList;
 	}
 
@@ -43,45 +47,45 @@ export default class Render {
 		th.appendChild(textNode);
 		tr.appendChild(th);
 
-		document.querySelectorAll('.exercise').forEach(function(el, idx) {
+		let idx = 0;
+		for(let el of document.querySelectorAll('.exercise')) {
+			let row = data[idx++];
+			// row should have {"id":93,"muscle":"Abdominals","muscleId":8,"exercise":"Ab Carver","weight":null,"rep1":null,"rep2":null}
 			let td = document.createElement('td');
 			td.setAttribute('id', 'col' + yrmon);
-
-			// extract the ID
-			let cellID = Number(el.getAttribute('id').substring(2));
-			let subdata = data.find(el => el['exerciseID'] === cellID);
-			if(subdata === undefined) {
+			if(row['weight'] === null && row['rep1'] === null && row['rep2'] === null) {
 				td.innerHTML = '&nbsp;';
 			} else {
-				let info;
 				let anchor = document.createElement('a');
 				anchor.setAttribute('href', 'javascript:render.edit(' + idx + ')');
-				if(subdata['weight'] == null) {
-					info = subdata['rep1'];
-					if(subdata['rep2'] != null) {
-						info += ', ' + subdata['rep2'];
+
+				let disp;
+				if(row['weight'] === null) {
+					disp = row['rep1'];
+					if(row['rep2'] !== null) {
+						disp += ', ' + row['rep2'];
 					}
 				} else {
-					if(subdata['rep2'] == null) {
-						info = subdata['weight'] + ' / ' + subdata['rep1'];
+					if(row['rep2'] === null) {
+						disp = `${row['weight']} / ${row['rep1']}`;
 					} else {
-						info = subdata['rep1'] + ', ' + subdata['rep2'] + '(' + subdata['weight'] + ')';
+						disp = `${row['rep1']}, ${row['rep2']} (${row['weight']})`;
 					}
 				}
-				let text = document.createTextNode(info);
+
+				let text = document.createTextNode(disp);
 				td.setAttribute('class', 'center');
 
 				anchor.appendChild(text);
 				td.appendChild(anchor);
-
-//				td.appendChild(text);
 			}
 
 			el.parentNode.appendChild(td);
-		});
+		}
+
 	}
 
-	categories(data) {
+	drawMusclesAndExercises(data) {
 		let th = document.getElementById('tableBody').parentNode;
 		data.forEach(section => {
 			let tr = document.createElement('tr');
@@ -103,14 +107,7 @@ export default class Render {
 				let textNode = document.createTextNode(obj['exerciseName']);
 				td.appendChild(textNode);
 				tr.appendChild(td);
-/*
-				for(var i = 0; i < monthCount; i++) {
-					td = document.createElement('td');
-					td.setAttribute('id', 'col' + this.monthList[i]);
-					td.innerHTML = '&nbsp;';
-					tr.appendChild(td);
-				}
-*/
+
 				th.appendChild(tr);
 			});
 		});

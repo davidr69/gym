@@ -11,7 +11,7 @@
     <script type="module">
         const workoutJS = './js/workout.js';
         const { default: Workout } = await import(workoutJS);
-        window.workout = new Workout();
+        globalThis.workout = new Workout();
     </script>
 
 
@@ -22,9 +22,9 @@
 	<thead id="tableHead">
 	<tr id="tableRecord">
 		<th style="width: auto; background-color: #ececec;" id="th">
-			<a href="javascript:rewind()">&laquo;&laquo;&laquo;</a>
+			<a href="javascript:globalThis.workout.rewind()">&laquo;&laquo;&laquo;</a>
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			<a href="javascript:forward()">&raquo;&raquo;&raquo;</a>
+			<a href="javascript:globalThis.workout.forward()">&raquo;&raquo;&raquo;</a>
 		</th>
 	</tr>
 	</thead>
