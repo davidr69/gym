@@ -8,18 +8,56 @@
 
 	<script src="./js/common.js"></script>
 	<script>
+		let params = parseUrlParams();
+		let id = params['id'];
+
+		const headers = {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json'
+		};
+
 		function confirm_del() {
 			if(confirm("Do you really want to remove this")) {
-				let f = document.forms[0];
-				f.action.value = "del";
-				f.submit();
+				fetch(`activity?id=${id}`, {
+					method: 'DELETE',
+					headers: headers
+				}).then(response => {
+					response.json().then(data => {
+						console.log(data);
+						opener.window.location.reload();
+						window.close();
+					})
+				}).catch(error => {
+					console.log(error);
+				});
 			}
 		}
 
 		function do_it() {
-			let f=document.forms[0];
-			f.action.value="mod";
-			f.submit();
+			const weight = document.getElementById('weight').value.trim();
+			const rep1 = document.getElementById('rep1').value.trim();
+			const rep2 = document.getElementById('rep2').value.trim();
+
+			const body =  {
+				id: id,
+				weight: weight === '' ? null : Number(weight),
+				rep1: rep1 === '' ? null : Number(rep1),
+				rep2: rep1 === '' ? null : Number(rep2)
+			};
+
+			fetch('activity', {
+				method: 'PUT',
+				body: JSON.stringify(body),
+				headers: headers
+			}).then(response => {
+				response.json().then(data => {
+					console.log(data);
+					opener.window.location.reload();
+					window.close();
+				})
+			}).catch(error => {
+				console.log(error);
+			});
 		}
 
 		draw = (el, val, useValue = false) => {
@@ -32,8 +70,6 @@
 			}
 		}
 
-		let params = parseUrlParams();
-		let id = params['id'];
 		fetch(`activity?id=${id}`).then(resp => {
 			resp.json().then(data => {
 				draw('muscle', data['muscle']);

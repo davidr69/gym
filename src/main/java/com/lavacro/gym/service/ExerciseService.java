@@ -7,14 +7,17 @@ import com.lavacro.gym.model.ExerciseDTO;
 import com.lavacro.gym.model.MuscleDTO;
 import com.lavacro.gym.model.ProgressDTO;
 import com.lavacro.gym.model.YrMonDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Slf4j
 public class ExerciseService {
 	private final MuscleExerciseRepository muscleExerciseRepository;
 	private final AllProgressRepository allProgressRepository;
@@ -97,5 +100,22 @@ public class ExerciseService {
 
 	public void saveProgress(ProgressEntity progress) {
 		progressRepository.save(progress);
+	}
+
+	public void updateProgress(ProgressEntity progress) {
+		Optional<ProgressEntity> entity = progressRepository.findById(progress.getId());
+		if(entity.isPresent()) {
+			ProgressEntity old = entity.get();
+			old.setWeight(progress.getWeight());
+			old.setRep1(progress.getRep1());
+			old.setRep2(progress.getRep2());
+			progressRepository.save(old);
+		} else {
+			log.error("Cannot find progress {}", progress.getId());
+		}
+	}
+
+	public void deleteProgress(Integer id) {
+		progressRepository.deleteById(id);
 	}
 }

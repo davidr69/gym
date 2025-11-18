@@ -69,4 +69,22 @@ public class Api {
 		resp.setMessage("SUCCESS");
 		return new ResponseEntity<>(resp, null, HttpStatus.OK);
 	}
+
+	@PutMapping(value = "/activity")
+	public ResponseEntity<GenericResponse> updateActivity(@RequestBody ProgressEntity progress) {
+		exerciseService.updateProgress(progress);
+		GenericResponse resp = new GenericResponse();
+		resp.setCode(0);
+		resp.setMessage("SUCCESS");
+		return new ResponseEntity<>(resp, null, HttpStatus.OK);
+	}
+
+	@DeleteMapping(value = "/activity")
+	public ResponseEntity<GenericResponse> deleteActivity(@RequestParam("id") Integer id) {
+		exerciseService.deleteProgress(id);
+		GenericResponse resp = new GenericResponse();
+		resp.setCode(0);
+		resp.setMessage("SUCCESS");
+		return new ResponseEntity<>(resp, null, HttpStatus.OK);
+	}
 }

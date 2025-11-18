@@ -23,6 +23,10 @@ export default class Workout {
 	count = 0;
 	monthCount = 3;
 	exercises;
+	headers = {
+		'Content-Type': 'application/json',
+		'Accept': 'application/json'
+	};
 
 	constructor() {
 		this.#drawTable();
@@ -150,7 +154,7 @@ export default class Workout {
 		window.open(url, "Edit/Delete", "width=500,height=350");
 	}
 
-	save = () => {
+	#getFormValues = () => {
 		const exercise = document.getElementById('choose_exercise').value;
 		const month = document.getElementById('choose_month').value;
 		const year = document.getElementById('choose_year').value;
@@ -160,24 +164,22 @@ export default class Workout {
 
 		const mydate = new Date(year, month - 1, 1);
 
-		const post_headers = {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json'
-		};
-
-		const body = {
+		return {
 			exercise: Number(exercise),
-			mydate: mydate
+			mydate: mydate,
+			weight: weight === '' ? null : Number(weight),
+			rep1: rep1 === '' ? null : Number(rep1),
+			rep2: rep1 === '' ? null : Number(rep2)
 		};
+	}
 
-		if(weight !== '') body.weight = Number(weight);
-		if(rep1 !== '') body.rep1 = Number(rep1);
-		if(rep2 !== '') body.rep2 = Number(rep2);
+	save = () => {
+		const body = this.#getFormValues();
 
 		fetch('activity', {
 			method: 'POST',
 			body: JSON.stringify(body),
-			headers: post_headers
+			headers: this.headers
 		}).then(response => {
 			response.json().then(data => {
 				console.log(data);
