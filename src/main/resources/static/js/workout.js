@@ -21,7 +21,7 @@ export default class Workout {
 	render = new Render();
 	allData = {};
 	count = 0;
-	monthCount = 3;
+	monthCount;
 	exercises;
 	headers = {
 		'Content-Type': 'application/json',
@@ -29,6 +29,8 @@ export default class Workout {
 	};
 
 	constructor() {
+		this.monthCount = navigator.userAgent.search('Mobile') === -1 ? 6 : 3;
+
 		this.#drawTable();
 
 		const formatter = new Intl.DateTimeFormat('en', { month: 'long' });

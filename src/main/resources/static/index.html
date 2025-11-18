@@ -32,12 +32,14 @@
 	<select id="choose_muscle" onChange="globalThis.workout.populateExercises()"></select>
 	&nbsp;&nbsp;&nbsp;
 	<select id="choose_exercise"></select>
-	&nbsp;&nbsp;&nbsp;
+	<br/><br/>
 	<select id="choose_month"></select>
 	<input type="number" size="4" maxlength="4" id="choose_year"/>
 	<br/><br/>
-	Weight: <input type="number" size="5" maxlength="5" id="weight"/><br/>
-	Rep1: <input type="number" size="4" maxlength="2" id="rep1"/><br/>
+	Weight: <input type="number" size="5" maxlength="5" id="weight"/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	Rep1: <input type="number" size="4" maxlength="2" id="rep1"/>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	Rep2: <input type="number" size="4" maxlength="2" id="rep2"/>
 	<br/><br/>
 	<input type="button" value=" add this " onClick="globalThis.workout.save();"/>
