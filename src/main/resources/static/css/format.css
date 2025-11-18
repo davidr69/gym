@@ -52,11 +52,3 @@ th {
 .center {
 	text-align:		center;
 }
-
-input[type="number"]#weight { width: 5ch; }
-input[type="number"]#rep1,
-input[type="number"]#rep2 { width: 4ch; }
-
-input[type="number"] {
-	box-sizing: content-box;
-}

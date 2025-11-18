@@ -76,14 +76,14 @@ export default class Workout {
 		let l = this.render.getMonths();
 		this.count = this.monthCount;
 		let callback = () => {
-			return this.#drawColumns('init');
+			return this.#drawColumns();
 		};
 		for(let i = l.length - this.monthCount; i<l.length; i++) {
 			this.#getHeader(l[i], callback);
 		}
 	}
 
-	#drawColumns = (params) => {
+	#drawColumns = () => {
 		let l = this.render.getMonths();
 		for(let i = l.length - this.monthCount; i<l.length; i++) {
 			let yrmon = l[i];
