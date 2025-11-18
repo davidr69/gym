@@ -171,7 +171,7 @@ export default class Workout {
 			mydate: mydate,
 			weight: weight === '' ? null : Number(weight),
 			rep1: rep1 === '' ? null : Number(rep1),
-			rep2: rep1 === '' ? null : Number(rep2)
+			rep2: rep2 === '' ? null : Number(rep2)
 		};
 	}
 
