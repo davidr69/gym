@@ -21,7 +21,7 @@ export default class Workout {
 	render = new Render();
 	allData = {};
 	count = 0;
-	monthCount = 6;
+	monthCount = 3;
 	exercises;
 
 	constructor() {
@@ -37,9 +37,10 @@ export default class Workout {
 		const monthDropDown = document.getElementById("choose_month");
 
 		for(let month = 0; month < 12; month++) {
-			let option = new Option(months[month], String(month + 1), month === currentMonth);
-			monthDropDown.add(option)
+			let option = new Option(months[month], String(month + 1));
+			monthDropDown.add(option);
 		}
+		monthDropDown.selectedIndex = currentMonth;
 		document.getElementById("choose_year").value = today.getFullYear();
 	}
 
@@ -146,33 +147,36 @@ export default class Workout {
 
 	edit = (id) => {
 		let url = `edit.html?id=${id}`;
-		window.open(url, "Edit/Delete", "width=750,height=600");
+		window.open(url, "Edit/Delete", "width=500,height=350");
 	}
 
 	save = () => {
 		const exercise = document.getElementById('choose_exercise').value;
 		const month = document.getElementById('choose_month').value;
 		const year = document.getElementById('choose_year').value;
-		const weight = document.getElementById('weight').value;
-		const rep1 = document.getElementById('rep1').value;
-		const rep2 = document.getElementById('rep2').value;
+		const weight = document.getElementById('weight').value.trim();
+		const rep1 = document.getElementById('rep1').value.trim();
+		const rep2 = document.getElementById('rep2').value.trim();
 
-		const dateStr = `${year}${month.padStart(2, '0')}`;
+		const mydate = new Date(year, month - 1, 1);
 
 		const post_headers = {
 			'Content-Type': 'application/json',
 			'Accept': 'application/json'
 		};
 
+		const body = {
+			exercise: Number(exercise),
+			mydate: mydate
+		};
+
+		if(weight !== '') body.weight = Number(weight);
+		if(rep1 !== '') body.rep1 = Number(rep1);
+		if(rep2 !== '') body.rep2 = Number(rep2);
+
 		fetch('activity', {
 			method: 'POST',
-			body: JSON.stringify({
-				exercise: Number(exercise),
-				mydate: dateStr,
-				weight: Number(weight),
-				rep1: Number(rep1),
-				rep2: Number(rep2)
-			}),
+			body: JSON.stringify(body),
 			headers: post_headers
 		}).then(response => {
 			response.json().then(data => {

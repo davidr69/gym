@@ -113,8 +113,4 @@ export default class Render {
 			});
 		});
 	}
-
-	edit(foo) {
-		console.log(foo);
-	}
 }
