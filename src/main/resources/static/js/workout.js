@@ -135,7 +135,7 @@ export default class Workout {
 		let dd = document.getElementById('choose_exercise');
 		dd.length = 0;
 		let muscle = document.getElementById('choose_muscle').value;
-		let exercises = this.exercises.filter(item => item.description === muscle)[0].exercises;
+		let exercises = this.exercises.find(item => item.description === muscle).exercises;
 		let data = exercises.map(item => [item['id'], item['exerciseName']] );
 		for (let datum of data) {
 			let option = new Option(datum[1], datum[0]);
@@ -185,7 +185,7 @@ export default class Workout {
 		}).then(response => {
 			response.json().then(data => {
 				console.log(data);
-				window.location.reload();
+				globalThis.location.reload();
 			})
 		}).catch(error => {
 			console.log(error);

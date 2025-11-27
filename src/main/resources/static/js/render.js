@@ -3,8 +3,6 @@ const months = [null, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'S
 export default class Render {
 	monthList;
 
-	constructor() { }
-
 	init(monthList) {
 		this.monthList = monthList;
 	}

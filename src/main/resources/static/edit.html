@@ -60,7 +60,7 @@
 			});
 		}
 
-		draw = (el, val, useValue = false) => {
+		const draw = (el, val, useValue = false) => {
 			if(val !== null) {
 				if(useValue) {
 					document.getElementById(el).value = val;
@@ -94,11 +94,11 @@
 
 <strong>Date:</strong> <span id="month"></span>/<span id="year"></span><br/><br/>
 
-<strong>Weight:</strong> <label for="weight"></label><input type="number" size="6" maxlength="6" id="weight" style="width: 75px"/>
+<label for="weight"><strong>Weight:</strong></label> <input type="number" size="6" maxlength="6" id="weight" name="weight" style="width: 75px"/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<strong>Rep1:</strong> <label for="rep1"></label><input type="number" size="4" maxlength="4" id="rep1" style="width: 50px"/>
+<label for="rep1"><strong>Rep1:</strong></label> <input type="number" size="4" maxlength="4" id="rep1" name="rep1" style="width: 50px"/>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<strong>Rep2:</strong> <label for="rep2"></label><input type="number" size="4" maxlength="4" id="rep2" style="width: 50px"/>
+<label for="rep2"><strong>Rep2:</strong></label> <input type="number" size="4" maxlength="4" id="rep2" name="rep2" style="width: 50px"/>
 <br/><br/>
 <input type="button" value=" Make it so! " onClick="do_it()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <input type="button" value=" Delete this " onClick="confirm_del()"/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
