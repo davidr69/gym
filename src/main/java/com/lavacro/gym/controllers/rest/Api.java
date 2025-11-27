@@ -18,6 +18,7 @@ import java.util.List;
 @Slf4j
 public class Api {
 	private final ExerciseService exerciseService;
+	private static final String SUCCESS = "SUCCESS";
 
 	public Api(ExerciseService exerciseService) {
 		this.exerciseService = exerciseService;
@@ -66,7 +67,7 @@ public class Api {
 		exerciseService.saveProgress(progress);
 		GenericResponse resp = new GenericResponse();
 		resp.setCode(0);
-		resp.setMessage("SUCCESS");
+		resp.setMessage(SUCCESS);
 		return new ResponseEntity<>(resp, null, HttpStatus.OK);
 	}
 
@@ -75,7 +76,7 @@ public class Api {
 		exerciseService.updateProgress(progress);
 		GenericResponse resp = new GenericResponse();
 		resp.setCode(0);
-		resp.setMessage("SUCCESS");
+		resp.setMessage(SUCCESS);
 		return new ResponseEntity<>(resp, null, HttpStatus.OK);
 	}
 
@@ -84,7 +85,7 @@ public class Api {
 		exerciseService.deleteProgress(id);
 		GenericResponse resp = new GenericResponse();
 		resp.setCode(0);
-		resp.setMessage("SUCCESS");
+		resp.setMessage(SUCCESS);
 		return new ResponseEntity<>(resp, null, HttpStatus.OK);
 	}
 }

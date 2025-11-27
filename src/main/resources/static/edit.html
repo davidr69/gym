@@ -7,31 +7,31 @@
 	<link type="text/css" rel="stylesheet" href="css/format.css">
 
 	<script src="./js/common.js"></script>
-	<script>
-		let params = parseUrlParams();
-		let id = params['id'];
+	<script type="module">
+		const params = globalThis.parseUrlParams ? globalThis.parseUrlParams() : {};
+		const id = params['id'];
 
 		const headers = {
 			'Content-Type': 'application/json',
 			'Accept': 'application/json'
 		};
 
-		function confirm_del() {
-			if(confirm("Do you really want to remove this")) {
-				fetch(`activity?id=${id}`, {
-					method: 'DELETE',
-					headers: headers
-				}).then(response => {
-					response.json().then(data => {
-						console.log(data);
-						opener.window.location.reload();
-						window.close();
-					})
-				}).catch(error => {
-					console.log(error);
-				});
-			}
-		}
+  		function confirm_del() {
+            if(confirm("Do you really want to remove this")) {
+                fetch(`activity?id=${id}`, {
+                    method: 'DELETE',
+                    headers: headers
+                }).then(response => {
+                    response.json().then(data => {
+                        console.log(data);
+                        opener.window.location.reload();
+                        window.close();
+                    })
+                }).catch(error => {
+                    console.log(error);
+                });
+            }
+        }
 
 		function do_it() {
 			const weight = document.getElementById('weight').value.trim();
@@ -70,21 +70,25 @@
 			}
 		}
 
-		fetch(`activity?id=${id}`).then(resp => {
-			resp.json().then(data => {
-				draw('muscle', data['muscle']);
-				draw('exercise', data['exercise']);
-				draw('weight', data['weight'], true);
-				draw('rep1', data['rep1'], true);
-				draw('rep2', data['rep2'], true);
-				let mon = data['mydate'].substring(4);
-				let yr = data['mydate'].substring(0, 4);
-				draw('month', mon);
-				draw('year', yr);
-			})
-		})
+  		try {
+            const resp = await fetch(`activity?id=${id}`);
+            const data = await resp.json();
+            draw('muscle', data['muscle']);
+            draw('exercise', data['exercise']);
+            draw('weight', data['weight'], true);
+            draw('rep1', data['rep1'], true);
+            draw('rep2', data['rep2'], true);
+            const mon = data['mydate'].substring(4);
+            const yr = data['mydate'].substring(0, 4);
+            draw('month', mon);
+            draw('year', yr);
+        } catch (e) {
+            console.log(e);
+        }
 
-	</script>
+		globalThis.confirm_del = confirm_del;
+		globalThis.do_it = do_it;
+ 	 </script>
 </head>
 <body>
 
