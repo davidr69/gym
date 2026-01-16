@@ -1,5 +1,7 @@
 # Gym Workouts #
 
+## This project has been deprecated by the Go version
+
 In the year 2000, I joined Bally's gym and wanted to keep a progress report of my workouts. It was originally an HTML page which was very tedious to maintain. I eventually created a PHP application to be able to add, edit, and delete entries.
 
 Eventually, I added a feature where I could "scroll" left and right to reveal and hide different date ranges but display only 6 at a time. It has one major flaw: it retrieves ALL the data at once, renders all of them and then hides all but the last 6 via CSS:
